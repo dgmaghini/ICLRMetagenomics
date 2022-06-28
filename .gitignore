@@ -1,0 +1,32 @@
+# hide short read assemblies and intermediate files
+01.shortread/assembly/02_assembly/02_metaspades/D*
+
+# hide test files for proprietary method
+02.proprietary/*
+
+03.bin_comparison/data_tables/Mdb.csv
+05.kmer_comparison/jellyfish/mer_counts_all.tsv
+05.kmer_comparison/jellyfish/mer_counts_wide.tsv
+
+# hide intermediate jellyfish files, reads, and blast results
+05.kmer_comparison/jellyfish/D*
+05.kmer_comparison/jellyfish/blast/
+05.kmer_comparison/reads/
+
+# hide sourmash intermediates
+05.kmer_comparison/sourmash/03_sourmash_signatures/
+05.kmer_comparison/sourmash/04_sourmash_compare/._*
+
+# hide binning troubleshooting folder
+binningissues/
+
+# misc
+._.DS_Store
+.DS_Store
+reads.tsv
+**._.DS_Store
+**.DS_Store
+**.snakemake
+.*
+!.gitignore
+!.Rproj

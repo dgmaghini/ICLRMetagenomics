@@ -1,0 +1,44 @@
+/labs/asbhatt/dmaghini/tools/miniconda3/envs/quast/bin/quast.py -o D09-NF-R1 /labs/asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/01.shortread/assembly/02_assembly/02_metaspades/D09-NF-R1/contigs.fasta --fast
+
+Version: 5.2.0
+
+System information:
+  OS: Linux-3.10.0-1160.66.1.el7.x86_64-x86_64-with-centos-7.9.2009-Core (linux_64)
+  Python version: 3.7.12
+  CPUs number: 48
+
+Started: 2022-06-13 14:32:44
+
+Logging to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/shortread_quast/D09-NF-R1/quast.log
+NOTICE: Maximum number of threads is set to 12 (use --threads option to set it manually)
+
+CWD: /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/shortread_quast
+Main parameters: 
+  MODE: default, threads: 12, min contig length: 500, min alignment length: 65, min alignment IDY: 95.0, \
+  ambiguity: one, min local misassembly length: 200, min extensive misassembly length: 1000
+
+Contigs:
+  Pre-processing...
+  /labs/asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/01.shortread/assembly/02_assembly/02_metaspades/D09-NF-R1/contigs.fasta ==> contigs
+
+2022-06-13 14:33:04
+Running Basic statistics processor...
+  Contig files: 
+    contigs
+  Calculating N50 and L50...
+    contigs, N50 = 10768, L50 = 5163, auN = 40866.4, Total length = 346487462, GC % = undefined, # N's per 100 kbp =  0.00
+Done.
+
+NOTICE: Genes are not predicted by default. Use --gene-finding or --glimmer option to enable it.
+
+2022-06-13 14:33:07
+RESULTS:
+  Text versions of total report are saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/shortread_quast/D09-NF-R1/report.txt, report.tsv, and report.tex
+  Text versions of transposed total report are saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/shortread_quast/D09-NF-R1/transposed_report.txt, transposed_report.tsv, and transposed_report.tex
+  Log is saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/shortread_quast/D09-NF-R1/quast.log
+
+Finished: 2022-06-13 14:33:07
+Elapsed time: 0:00:22.683926
+NOTICEs: 2; WARNINGs: 0; non-fatal ERRORs: 0
+
+Thank you for using QUAST!

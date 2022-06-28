@@ -1,0 +1,2 @@
+Assembly	# contigs (>= 0 bp)	# contigs (>= 1000 bp)	# contigs (>= 5000 bp)	# contigs (>= 10000 bp)	# contigs (>= 25000 bp)	# contigs (>= 50000 bp)	Total length (>= 0 bp)	Total length (>= 1000 bp)	Total length (>= 5000 bp)	Total length (>= 10000 bp)	Total length (>= 25000 bp)	Total length (>= 50000 bp)	# contigs	Largest contig	Total length	N50	N90	auN	L50	L90	# N's per 100 kbp
+D03-NF-R1_final	3524	3481	2026	1464	832	392	84433860	84403658	80542053	76442441	65909364	50090379	3524	1029918	84433860	69985	10767	177850.4	258	1420	0.00

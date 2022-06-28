@@ -1,0 +1,44 @@
+/labs/asbhatt/dmaghini/tools/miniconda3/envs/quast/bin/quast.py -o D04-NF-R1_final /labs/asbhatt/jackshan/projects/ONP_Rerun/D04-NF-R1/D04-NF-R1/5.final/D04-NF-R1_final.fa --fast
+
+Version: 5.2.0
+
+System information:
+  OS: Linux-3.10.0-1160.66.1.el7.x86_64-x86_64-with-centos-7.9.2009-Core (linux_64)
+  Python version: 3.7.12
+  CPUs number: 48
+
+Started: 2022-06-13 11:54:11
+
+Logging to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/nanopore_quast/D04-NF-R1_final/quast.log
+NOTICE: Maximum number of threads is set to 12 (use --threads option to set it manually)
+
+CWD: /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/nanopore_quast
+Main parameters: 
+  MODE: default, threads: 12, min contig length: 500, min alignment length: 65, min alignment IDY: 95.0, \
+  ambiguity: one, min local misassembly length: 200, min extensive misassembly length: 1000
+
+Contigs:
+  Pre-processing...
+  /labs/asbhatt/jackshan/projects/ONP_Rerun/D04-NF-R1/D04-NF-R1/5.final/D04-NF-R1_final.fa ==> D04-NF-R1_final
+
+2022-06-13 11:54:29
+Running Basic statistics processor...
+  Contig files: 
+    D04-NF-R1_final
+  Calculating N50 and L50...
+    D04-NF-R1_final, N50 = 75963, L50 = 1083, auN = 324857.1, Total length = 466400265, GC % = undefined, # N's per 100 kbp =  0.00
+Done.
+
+NOTICE: Genes are not predicted by default. Use --gene-finding or --glimmer option to enable it.
+
+2022-06-13 11:54:32
+RESULTS:
+  Text versions of total report are saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/nanopore_quast/D04-NF-R1_final/report.txt, report.tsv, and report.tex
+  Text versions of transposed total report are saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/nanopore_quast/D04-NF-R1_final/transposed_report.txt, transposed_report.tsv, and transposed_report.tex
+  Log is saved to /oak/stanford/scg/lab_asbhatt/dmaghini/projects/benchmarking/AssemblyMethods/04.stat_comparison/nanopore_quast/D04-NF-R1_final/quast.log
+
+Finished: 2022-06-13 11:54:32
+Elapsed time: 0:00:21.333055
+NOTICEs: 2; WARNINGs: 0; non-fatal ERRORs: 0
+
+Thank you for using QUAST!

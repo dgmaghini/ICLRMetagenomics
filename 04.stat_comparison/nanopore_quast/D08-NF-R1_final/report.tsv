@@ -1,0 +1,22 @@
+Assembly	D08-NF-R1_final
+# contigs (>= 0 bp)	7842
+# contigs (>= 1000 bp)	7720
+# contigs (>= 5000 bp)	5112
+# contigs (>= 10000 bp)	4032
+# contigs (>= 25000 bp)	2540
+# contigs (>= 50000 bp)	1254
+Total length (>= 0 bp)	352649087
+Total length (>= 1000 bp)	352564112
+Total length (>= 5000 bp)	345728018
+Total length (>= 10000 bp)	337882132
+Total length (>= 25000 bp)	313428693
+Total length (>= 50000 bp)	266455069
+# contigs	7841
+Largest contig	4084003
+Total length	352649066
+N50	203756
+N90	22633
+auN	695463.5
+L50	268
+L90	2706
+# N's per 100 kbp	0.00

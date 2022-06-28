@@ -1,0 +1,6 @@
+Copied short read binning info from /oak/stanford/scg/lab_asbhatt/jackshan/projects/Illumina_ONP_Comparision/Binning_Short/binning_das_tool/binning_table_all_full.tsv
+Copied infinity binning info from /oak/stanford/scg/lab_asbhatt/jackshan/projects/Illumina_ONP_Comparision/Binning_Infinity/binning_das_tool/binning_table_all_full.tsv
+
+Concatenated individual nanopore binning tables
+for i in /labs/asbhatt/jackshan/projects/ONP_Rerun/D*/Binning/binning_das_tool/binning_table_all_full.tsv; do cat $i; done >> nanopore_binning_table_all_full.tsv
+for i in /labs/asbhatt/jackshan/projects/D05_D08_Rerun/D0*/Binning/binning_das_tool/binning_table_all_full.tsv; do cat $i; done >> nanopore_binning_table_all_full.tsv
