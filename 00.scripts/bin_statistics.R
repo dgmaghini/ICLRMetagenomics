@@ -109,6 +109,10 @@ n50 <- ggplot(bins, aes(x=Method, y=N50_kb, fill=Method)) +
 n50 
 plot_grid(comp, cont, n50, nrow=1, ncol=3, align = "hv", scale = 0.9)
 
+i <- bins %>% filter(Method == "Infinity") 
+n <- bins %>% filter(Method == "Nanopore")
+median(n$Completeness)
+sd(n$Completeness)
 # plots
 #    number of bins by sample by method
 #    number of bins by quality by sample by method
@@ -143,7 +147,7 @@ plot_grid(a, legend, nrow=2, ncol = 1, rel_heights = c(5, .4))
 
 #### MATCHING BIN COMPARISON #####
 matching_bins <- read.csv(here("03.bin_comparison/matching_bins_paths.tsv"), header=TRUE, sep="\t")
-
+names(matching_bins) <- c("Query", "Reference", "Query_Path", "Reference_Path")
 infinity_bins <- read.csv(here("04.stat_comparison/infinity_binning_table_all_full.tsv"), sep="\t", header=TRUE) 
 headernames <- names(infinity_bins)
 colnames(infinity_bins) <- paste(colnames(infinity_bins), "infinity", sep="_")
@@ -173,7 +177,7 @@ matching_bins <- mutate(matching_bins, changeCompleteness=log2(Completeness_infi
 matching_bins <- mutate(matching_bins, changeContamination=log2(ifelse(Contamination_infinity == 0, 0.1, Contamination_infinity)) - log2(ifelse(Contamination_nanopore == 0, 0.1, Contamination_nanopore)))
 
 
-matching_bins %>% select(Size.Mb_infinity, Size.Mb_nanopore, changeSize)
+matching_bins %>% select(Size.Mb_infinity, Size.Mb_nanopore, changeSize) %>% arrange(changeSize) %>% head()
 
 p <- ggplot(matching_bins, aes(x=changeSize, y=changeN50)) + 
   geom_hline(yintercept=0, color="lightgrey") +
@@ -201,4 +205,68 @@ ggplot(matching_bins, aes(x=changeContamination, y=changeCompleteness)) +
   scale_y_continuous(limits=c(-4, 4)) +
   theme(panel.grid.major=element_blank(), panel.grid.minor = element_blank())
 
-matching_bins %>% arrange(changeN50) %>% select(Sample_infinity, Bin_infinity, Sample_nanopore, Bin_nanopore, Size.Mb_nanopore, Size.Mb_infinity, lca_species_nanopore, changeSize, changeN50) %>% head()
+
+# read in gene lenth info and plot accordingly
+nanopore_gene_length <- read.csv(here("03.bin_comparison/01.prokka/gene_lengths_nanopore.tsv"), header=FALSE, sep="\t")
+infinity_gene_length <- read.csv(here("03.bin_comparison/01.prokka/gene_lengths_infinity.tsv"), header=FALSE, sep="\t")
+names(nanopore_gene_length) <- c("Reference", "MeanGeneLength_nanopore")
+names(infinity_gene_length) <- c("Query", "MeanGeneLength_infinity")
+
+# wide dataframe for x by y plotting
+matching_bins <- merge(matching_bins, nanopore_gene_length, by="Reference")
+matching_bins <- merge(matching_bins, infinity_gene_length, by="Query")
+
+names(nanopore_gene_length) <- c("Bin", "Length")
+nanopore_gene_length <- mutate(nanopore_gene_length, Method="Nanopore")
+names(infinity_gene_length) <- c("Bin", "Length")
+infinity_gene_length <- mutate(infinity_gene_length, Method="Infinity")
+
+comp_table <- matching_bins %>% select(Query, Reference) %>% mutate(ComparisonID = paste(Query, Reference))
+
+infinity_gene_length <- merge(infinity_gene_length, comp_table %>% select(Query, ComparisonID), by.x=c("Bin"), by.y=c("Query"))
+nanopore_gene_length <- merge(nanopore_gene_length, comp_table %>% select(Reference, ComparisonID), by.x=c("Bin"),
+                      by.y=c("Reference"))
+
+# long form data frame that has a column for pair associations
+gene_lengths <- rbind(nanopore_gene_length, infinity_gene_length)
+
+ggplot(gene_lengths, aes(x=Method, y=Length, fill=Method)) + 
+  geom_jitter(width = 0.1, color="darkgrey") + 
+  geom_boxplot(outlier.shape=NA, alpha=0.8) + 
+  ylab("Mean Gene Length (bp)") + 
+  scale_fill_manual(values=pal, breaks=c("Infinity", "Nanopore")) + 
+  theme_bw() + 
+  stat_compare_means(test="wilcox.test", comparisons=list(c("Infinity", "Nanopore")), paired=TRUE, group.by="ComparisonID", label="p.signif", tip.length=0) + 
+  theme(axis.title.x = element_blank(), text = element_text(size=15))
+
+i <- gene_lengths %>% filter(Method == "Infinity")
+n <- gene_lengths %>% filter(Method == "Nanopore")
+
+median(n$Length)
+sd(n$Length)
+
+#ggsave(here("00.outputs/paired_gene_length.pdf"), w=5, h=6, dpi=300)
+#ggsave(here("00.outputs/paired_gene_length.jpg"), w=5, h=6, dpi=300)
+
+
+matching_bins <- matching_bins %>% mutate(ComparisonID = paste(Query, Reference))
+infinity_gene_counts <- matching_bins %>% select(Query, ComparisonID, Genes_infinity) %>% mutate(Method = "Infinity")
+nanopore_gene_counts <- matching_bins %>% select(Reference, ComparisonID, Genes_nanopore) %>% mutate(Method = "Nanopore")
+names(infinity_gene_counts) <- c("Bin", "ComparisonID", "Genes", "Method")
+names(nanopore_gene_counts) <- c("Bin", "ComparisonID", "Genes", "Method")
+
+gene_counts <- rbind(infinity_gene_counts, nanopore_gene_counts)
+
+ggplot(gene_counts, aes(x=Method, y=Genes, fill=Method)) + 
+  geom_jitter(width = 0.1, color="darkgrey") + 
+  geom_boxplot(outlier.shape=NA, alpha=0.8) + 
+  ylab("Number of Genes") + 
+  scale_fill_manual(values=pal, breaks=c("Infinity", "Nanopore")) + 
+  theme_bw() + 
+  stat_compare_means(test="wilcox.test", comparisons=list(c("Infinity", "Nanopore")), paired=TRUE, group.by="ComparisonID", label="p.signif", tip.length=0) + 
+  theme(axis.title.x = element_blank(), text = element_text(size=15))
+
+ggsave(here("00.outputs/paired_gene_count.pdf"), w=5, h=6, dpi=300)
+ggsave(here("00.outputs/paired_gene_count.jpg"), w=5, h=6, dpi=300)
+
+

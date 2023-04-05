@@ -114,7 +114,7 @@ ggsave(here("00.outputs/kmer_k21.pdf"), dpi=300, w=6, h=5)
 
 
 
-##### KMER JELLYFISH HISTOGRAM #####
+##### KMER JELLYFISH HISTO #####
 hist <- read.table(here("05.kmer_comparison/jellyfish/Donor2_infinity/mer_count_hist.tsv"), header=FALSE, sep=" ")
 names(hist) <- c("NumberOccurrences", "NumberKmers")
 
@@ -132,7 +132,7 @@ ggsave(here("00.outputs/kmer_histogram_example.pdf"), dpi=300, w=8, h=5)
 ggsave(here("00.outputs/kmer_histogram_example.jpg"), dpi=300, w=8, h=5)
 
 
-##### KMER JELLYFISH DESEQ
+##### KMER JELLYFISH DESEQ #####
 # if (!require("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 # BiocManager::install("genefilter")
@@ -190,7 +190,8 @@ ggplot(resOrdered, aes(x=log2FoldChange, y=padj_neglog10, color=Enrichment)) +
   scale_color_manual(values=pal, limits = c("Nanopore", "Infinity")) +
   theme_bw() + 
   xlab("Log2 Fold Change") + 
-  ylab("-log10 Adjusted P-value") 
+  ylab("-log10 Adjusted P-value") + 
+  theme(text = element_text(size=15))
 
 ggsave(here("00.outputs/kmer_enrichment_volcano.jpg"), dpi = 300, w = 9, h=7)
 ggsave(here("00.outputs/kmer_enrichment_volcano.pdf"), dpi = 300, w = 9, h=7)
@@ -198,9 +199,20 @@ ggsave(here("00.outputs/kmer_enrichment_volcano.pdf"), dpi = 300, w = 9, h=7)
 
 # next, pull out some individual kmers enriched in nanopore
 res_df_filt <- resOrdered %>% 
-  filter(padj < 0.05, abs(log2FoldChange) > 15) %>% filter(Enrichment == "Nanopore") %>% 
+  filter(padj < 0.05, abs(log2FoldChange) > 15) %>% filter(Enrichment == "Infinity") %>% 
   arrange(log2FoldChange)
 
+outf_infinity <- res_df_filt %>% select(kmer, baseMean, log2FoldChange, padj)
+
+res_df_filt2 <- resOrdered %>% 
+  filter(padj < 0.05, abs(log2FoldChange) > 5) %>% filter(Enrichment == "Nanopore") %>% 
+  arrange(log2FoldChange)
+outf_nanopore <- res_df_filt2 %>% select(kmer, baseMean, log2FoldChange, padj)
+
+write_tsv(outf_infinity, here("05.kmer_comparison/jellyfish/kmers_topinfinity.tsv"), quote="none")
+write_tsv(outf_nanopore, here("05.kmer_comparison/jellyfish/kmers_topnanopore.tsv"), quote="none")
+
+names(res_df_filt)
 top_kmer <- res_df_filt$kmer[1]
 top_kmer2 <- res_df_filt$kmer[2]
 
