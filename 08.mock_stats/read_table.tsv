@@ -1,0 +1,9 @@
+Method	Infinity1	Infinity2	Nanopore	Short
+Number of Reads (M)	15.452656	 9.041520	 7.211303	49.774986
+Total Sequencing (Gbp)	82.350476	49.571575	10.863704	 7.516023
+Mean Read Length (Kbp)	5.3292	5.4827	1.5065	0.1510
+Maximum Read Length (Kbp)	 34.849	 33.911	157.922	  0.151
+Read N50 (kbp)	7.447	7.546	4.531	0.151
+Reads ≥ Q20 (%)	87.99	91.03	76.00	94.38
+Reads ≥ Q30 (%)	85.96	88.98	22.72	87.42
+Read GC Content (%)	44.10	44.00	45.92	44.63

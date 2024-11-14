@@ -20,6 +20,33 @@
 # hide binning troubleshooting folder
 binningissues/
 
+# hide all deprecated analyses
+00.outputs/deprecated/
+00.scripts/deprecated/
+01.shortread/
+03.bin_comparison/deprecated/
+04.stat_comparison/README
+04.stat_comparison/infinity_reads/
+04.stat_comparison/nanopore_assemblies/
+04.stat_comparison/nanopore_reads/
+04.stat_comparison/nanopore_quast/
+04.stat_comparison/shortread_quast/
+04.stat_comparison/shortread_reads/
+04.stat_comparison/deprecated/
+06.mockcommunity/*
+!06.mockcommunity/06.IS/results/00.referencegenomes/summaryIS_formatted.tsv
+!06.mockcommunity/05.subsample_new/1.assemblies/02.quast_new/transposed_report.tsv
+!06.mockcommunity/05_subsample_new/2.bins/manual_quast/concatenated_report.tsv
+08.mock_stats/reads/*fq
+08.mock_stats/reads/infinity1_length.tsv
+07.human_stats/reads/*fq.gz
+07.human_stats/reads/*fastq.gz
+09.supplements/
+deprecated/
+
+
+
+
 # misc
 ._.DS_Store
 .DS_Store

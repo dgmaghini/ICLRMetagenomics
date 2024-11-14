@@ -4,16 +4,19 @@ library(reshape2)
 library(ggplot2)
 library(cowplot)
 
-nanopore_length <- read.table(here("08.mock_stats/reads/nanopore_length.tsv"), header=FALSE, sep=" ")
-infinity2_length <- read.table(here("08.mock_stats/reads/infinity2_length.tsv"), header=FALSE, sep=" ")
+
+## Script for read length supplement
+
+nanopore_length <- read.table(here("07.human_stats/reads/nanopore_D1_length.tsv"), header=FALSE, sep=" ")
+infinity_length <- read.table(here("07.human_stats/reads/infinity_D1_length.tsv"), header=FALSE, sep=" ")
 
 names(nanopore_length) <- c("Length", "Count")
-names(infinity2_length) <- c("Length", "Count")
+names(infinity_length) <- c("Length", "Count")
 
 nanopore_length <- nanopore_length %>% mutate(Method = "ONT")
-infinity2_length <- infinity2_length %>% mutate(Method = "ICLR")
+infinity_length <- infinity_length %>% mutate(Method = "ICLR")
 
-lengthdf <- rbind(nanopore_length, infinity2_length)
+lengthdf <- rbind(nanopore_length, infinity_length)
 lengthdf <- lengthdf %>% mutate(bin = floor(Length/500) * 500)
 lengthdf <- lengthdf %>% mutate(totalBases = Count * Length)
 
@@ -37,8 +40,7 @@ basecount2 <- ggplot(lengthdf, aes(x=bin/1000, y=BaseCount, fill=Method, color=M
   ylab("Number of Bases") + 
   scale_y_log10() + 
   theme(panel.grid = element_blank(), 
-        text = element_text(size=9), legend.title=element_blank())
-basecount2
+          text = element_text(size=9), legend.title=element_blank())
 
 readcount2 <- ggplot(lengthdf, aes(x=bin/1000, y=ReadCount, fill=Method, color=Method)) + 
   geom_area(alpha = 0.5, position = "identity")+
@@ -51,7 +53,6 @@ readcount2 <- ggplot(lengthdf, aes(x=bin/1000, y=ReadCount, fill=Method, color=M
   scale_y_log10() + 
   theme(panel.grid = element_blank(), 
         text = element_text(size=9), legend.title=element_blank())
-readcount2
 
 leg <- get_legend(readcount2)
 main <- plot_grid(readcount2 + theme(legend.position = "NA", panel.background = element_rect(color = "black", linewidth = 0.8), 
@@ -64,7 +65,6 @@ main <- plot_grid(readcount2 + theme(legend.position = "NA", panel.background = 
                   nrow = 1, ncol=3, labels = c("a", "b", ""), rel_widths = c(1,1,0.3))
 main
 
-ggsave(here("00.outputs/final/suppfigures/mockcommunity_readlengths_density.pdf"), dpi=300, w=5.5, h=2.4)
-ggsave(here("00.outputs/final/suppfigures/mockcommunity_readlengths_density.jpg"), dpi=300, w=5.5, h=2.4)
-
+ggsave(here("00.outputs/final/suppfigures/human_readlengths_density.pdf"), dpi=300, w=5.5, h=2.4)
+ggsave(here("00.outputs/final/suppfigures/human_readlengths_density.jpg"), dpi=300, w=5.5, h=2.4)
 
